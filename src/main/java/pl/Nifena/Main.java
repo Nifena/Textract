@@ -5,14 +5,33 @@ import net.sourceforge.tess4j.TesseractException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
+        Scanner scanner = new Scanner(System.in);
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Tesseract tesseract = new Tesseract();
-        tesseract.setDatapath("tessdata");
-        tesseract.setLanguage("pol");
+
+        System.out.println("Enter the language you want to use for OCR:");
+        String lang = scanner.nextLine();
+
+        Path tessdataDir = Paths.get("tessdata");
+        Files.createDirectories(tessdataDir);
+        Path trainedDataPath = tessdataDir.resolve(lang + ".traineddata");
+
+        try (InputStream in = new URL("https://github.com/tesseract-ocr/tessdata/raw/refs/heads/main/" + lang + ".traineddata").openStream()) {
+            Files.copy(in, trainedDataPath, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Downloaded traineddata for language: " + lang);
+        } catch (IOException e) {
+            System.out.println("Failed to download traineddata file: " + e.getMessage());
+        }
+
+        tesseract.setDatapath(tessdataDir.toAbsolutePath().toString());
+        tesseract.setLanguage(lang);
 
         Path inputPath = Paths.get("Input");
         Path outputPath = Paths.get("Output");
