@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
+        System.setProperty("jna.library.path", "/opt/homebrew/lib");
         Scanner scanner = new Scanner(System.in);
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Tesseract tesseract = new Tesseract();
