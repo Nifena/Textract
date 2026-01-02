@@ -1,13 +1,19 @@
 package pl.Nifena;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        OcrLanguageService ocrLanguageService = new OcrLanguageService();
 
         System.setProperty("jna.library.path", "/opt/homebrew/lib");
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Languages available:");
+        ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
+        languages.forEach(l -> System.out.println(" - " + l));
+
         System.out.println("Enter the language you want to use for OCR:");
         String lang = scanner.nextLine();
 

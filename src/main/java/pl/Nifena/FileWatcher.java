@@ -23,7 +23,6 @@ public class FileWatcher {
 
         while (true) {
             WatchKey key = service.take();
-
             for (WatchEvent<?> event : key.pollEvents()) {
                 Path fileName = (Path) event.context();
                 String lower = fileName.toString().toLowerCase();
@@ -32,8 +31,10 @@ public class FileWatcher {
                     System.out.println("Processing " + fileName);
                     processor.process(inputDir, fileName);
                 }
+                else {
+                    System.out.println("File extension not recognized");
+                }
             }
-
             key.reset();
         }
     }
