@@ -1,4 +1,4 @@
-package pl.Nifena;
+package pl.Nifena.ocr;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -21,10 +21,12 @@ public class OcrProcessor {
 
         File file = inputDir.resolve(fileName).toFile();
         try {
-            String result = tesseract.doOCR(file);
+            String textInput = tesseract.doOCR(file);
+
+            String result = build(textInput);
 
             Path outputFile = outputDir.resolve(
-                    fileName.toString().replaceAll("(?i)\\.jpe?g$", ".txt")
+                    fileName.toString().replaceAll("(?i)\\.jpe?g$", ".tex")
             );
 
             Files.write(outputFile, result.getBytes(), StandardOpenOption.CREATE);
@@ -33,5 +35,25 @@ public class OcrProcessor {
         } catch (TesseractException | IOException e) {
             System.err.println("OCR failed for " + fileName + ": " + e.getMessage());
         }
+    }
+
+
+    public String build(String content){
+        return """
+                \\documentclass{article}
+                \\usepackage[utf8]{inputenc}
+                \\begin{document}
+                %s
+                \\end{document}
+                """.formatted(escape(content));
+    }
+
+    private String escape(String t) {
+        return t.replace("\\", "\\textbackslash{}")
+                .replace("_", "\\_")
+                .replace("%", "\\%")
+                .replace("&", "\\&")
+                .replace("$", "\\$")
+                .replace("#", "\\#");
     }
 }

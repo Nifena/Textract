@@ -1,4 +1,4 @@
-package pl.Nifena;
+package pl.Nifena.fs;
 
 import java.io.IOException;
 import java.nio.file.Files;

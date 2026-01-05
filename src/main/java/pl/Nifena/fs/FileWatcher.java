@@ -1,4 +1,6 @@
-package pl.Nifena;
+package pl.Nifena.fs;
+
+import pl.Nifena.ocr.OcrProcessor;
 
 import java.io.IOException;
 import java.nio.file.*;

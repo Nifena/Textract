@@ -1,5 +1,12 @@
 package pl.Nifena;
 
+import pl.Nifena.fs.DirectoryManager;
+import pl.Nifena.fs.FileWatcher;
+import pl.Nifena.ocr.OcrConfig;
+import pl.Nifena.ocr.OcrLanguageService;
+import pl.Nifena.ocr.OcrProcessor;
+import pl.Nifena.ocr.TesseractInitializer;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,9 +17,9 @@ public class Main {
         System.setProperty("jna.library.path", "/opt/homebrew/lib");
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Languages available:");
-        ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
-        languages.forEach(l -> System.out.println(" - " + l));
+        //System.out.println("Languages available:");
+        //ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
+        //languages.forEach(l -> System.out.println(" - " + l));
 
         System.out.println("Enter the language you want to use for OCR:");
         String lang = scanner.nextLine();
@@ -28,7 +35,7 @@ public class Main {
         trainedDataManager.ensureTrainedDataExists(lang);
 
         TesseractInitializer initializer = new TesseractInitializer();
-        var tesseract = initializer.initialize(config.getTessdataDir(), lang);
+        var tesseract = initializer.initialize(config.getTessdataDir(), lang); //ustawia tesseracta
 
         OcrProcessor processor = new OcrProcessor(tesseract, config.getOutputDir());
 

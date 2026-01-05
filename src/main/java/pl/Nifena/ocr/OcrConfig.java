@@ -1,4 +1,4 @@
-package pl.Nifena;
+package pl.Nifena.ocr;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

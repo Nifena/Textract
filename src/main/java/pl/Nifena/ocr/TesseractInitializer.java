@@ -1,4 +1,4 @@
-package pl.Nifena;
+package pl.Nifena.ocr;
 
 import net.sourceforge.tess4j.Tesseract;
 

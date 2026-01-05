@@ -1,4 +1,4 @@
-package pl.Nifena;
+package pl.Nifena.ocr;
 
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
