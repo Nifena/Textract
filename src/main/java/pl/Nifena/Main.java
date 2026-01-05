@@ -8,6 +8,7 @@ import pl.Nifena.ocr.OcrProcessor;
 import pl.Nifena.ocr.TesseractInitializer;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,12 +18,11 @@ public class Main {
         System.setProperty("jna.library.path", "/opt/homebrew/lib");
 
         Scanner scanner = new Scanner(System.in);
-        //System.out.println("Languages available:");
-        //ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
-        //languages.forEach(l -> System.out.println(" - " + l));
+        System.out.println("Languages available:");
+        ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
+        languages.forEach(l -> System.out.println(" - " + l));
 
-        System.out.println("Enter the language you want to use for OCR:");
-        String lang = scanner.nextLine();
+        String lang = askForLanguage(scanner, languages);
 
         OcrConfig config = new OcrConfig(lang);
 
@@ -41,5 +41,16 @@ public class Main {
 
         FileWatcher watcher = new FileWatcher(config.getInputDir(), processor);
         watcher.startWatching();
+    }
+    public static String askForLanguage(Scanner scanner, List<String> languages){
+        while (true){
+            System.out.println("Enter the language you want to use for OCR:");
+            String lang = scanner.nextLine().trim();
+
+            if (languages.contains(lang)){
+                return lang;
+            }
+            System.out.println("Invalid language try again");
+        }
     }
 }

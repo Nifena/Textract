@@ -29,7 +29,7 @@ public class TrainedDataManager {
             Files.copy(in, file, StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Downloaded traineddata for " + lang);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to download traineddata: " + lang, e);
+            System.out.println("The language file could not be downloaded");
         }
     }
 
