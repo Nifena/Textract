@@ -18,9 +18,7 @@ public class Main {
         System.setProperty("jna.library.path", "/opt/homebrew/lib");
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Languages available:");
-        ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
-        languages.forEach(l -> System.out.println(" - " + l));
+        ArrayList<String> languages = showLanguages(ocrLanguageService);
 
         String lang = askForLanguage(scanner, languages);
 
@@ -52,5 +50,11 @@ public class Main {
             }
             System.out.println("Invalid language try again");
         }
+    }
+    public static ArrayList<String> showLanguages(OcrLanguageService ocrLanguageService){
+        System.out.println("Languages available:");
+        ArrayList<String> languages = ocrLanguageService.getAvailableLanguages();
+        languages.forEach(l -> System.out.println(" - " + l));
+        return languages;
     }
 }
